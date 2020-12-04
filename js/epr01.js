@@ -1,9 +1,4 @@
 export default function execute() {
-
-    // fetch('https://adventofcode.com/2020/day/1/input')
-    //     .then(response => console.log(response))
-        // .then(data => console.log(data));
-
     let filesInput = document.getElementById("file");
     filesInput.addEventListener("change", function (event) {
         let files = event.target.files;
@@ -12,9 +7,7 @@ export default function execute() {
         reader.addEventListener("load", function (event) {
             let textFile = event.target;
             let cast = parseRaw(textFile.result)
-            let pairs = createPairs(cast);
-
-            console.log(pairs);
+            createPairs(cast);
         });
         reader.readAsText(file);
     });
