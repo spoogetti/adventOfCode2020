@@ -35,7 +35,6 @@ function parseRaw(text) {
 //     return path;
 // }
 
-// 3-2
 function travels(parsed, slopes) {
     let paths = []
     const pathWidth = parsed[0].length;
@@ -63,7 +62,6 @@ function countTreesOnPath(path) {
     return trees;
 }
 
-// 3-2
 function countTreesOnPaths(paths) {
     let multipliedResult = 1;
     paths.forEach((path) => {
