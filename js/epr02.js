@@ -49,7 +49,6 @@ function countValidOccurences(parsed) {
 }
 
 function getOccOfLetrInStr(ltr, str) {
-    console.log(ltr, str, (str.match(new RegExp(ltr, "g")) || []).length)
     return (str.match(new RegExp(ltr, "g")) || []).length
 }
 

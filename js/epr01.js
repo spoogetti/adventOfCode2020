@@ -11,8 +11,6 @@ export default function execute() {
         });
         reader.readAsText(file);
     });
-
-    // console.log(result);
 }
 
 function parseRaw(text) {
