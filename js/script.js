@@ -10,5 +10,8 @@
 // import * as epr04 from "./epr04.js";
 // epr04.default();
 
-import * as epr05 from "./epr05.js";
-epr05.default();
+// import * as epr05 from "./epr05.js";
+// epr05.default();
+
+import * as epr06 from "./epr06.js";
+epr06.default();

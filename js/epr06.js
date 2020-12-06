@@ -7,74 +7,87 @@ export default function execute() {
         reader.addEventListener("load", function (event) {
             let textFile = event.target;
             let parsed = parseRaw(textFile.result)
-            // alert(missingSeat(seatIds))
+            alert(processAnswers(parsed).reduce((a, b) => a + b, 0))
         });
         reader.readAsText(file);
     });
 }
 
+// 6-1
+// function parseRaw(text) {
+//     let splitted = text.split('\r\n');
+//     let grouped = [];
+//     let group = '';
+//     splitted.forEach(split => {
+//         if(split === "") {
+//             grouped.push(group)
+//             group = ''
+//         } else
+//             group += split
+//     });
+//     return grouped
+// }
+
+// 6-2
 function parseRaw(text) {
     let splitted = text.split('\r\n');
-    return splitted.map(split => split.split(''))
+    let grouped = [];
+    let group = [];
+    splitted.forEach(split => {
+        if(split === "") {
+            grouped.push(group)
+            group = []
+        } else
+            group.push(split)
+    });
+    return grouped
 }
 
-function processSeatsIds(parsed) {
-    let seats = []
+// 6-1
+// function processAnswers(parsed) {
+//     let uniqueAnswersAmount = []
+//
+//     parsed.forEach((parse) => {
+//        uniqueAnswersAmount.push(makeUnique(parse).length)
+//     })
+//
+//     return uniqueAnswersAmount;
+// }
 
-    let index = 1
+// function makeUnique(str) {
+//     return String.prototype.concat(...new Set(str))
+// }
+
+// 6-2
+function processAnswers(parsed) {
+    let uniqueAnswersAmount = []
 
     parsed.forEach((parse) => {
-        let minRow = 0
-        let maxRow = 127
-        let row = 0
-
-        let minCol = 0
-        let maxCol = 7
-        let col = 0
-
-        parse.forEach((op) => {
-            switch(op) {
-                case 'F':
-                    maxRow -= Math.floor((maxRow - minRow) / 2) + 1
-                    break
-                case 'B':
-                    minRow += (Math.floor((maxRow - minRow) / 2)) + 1
-                    break
-                case 'L':
-                    maxCol -= Math.floor((maxCol - minCol) / 2) + 1
-                    break
-                case 'R':
-                    minCol += Math.floor((maxCol - minCol) / 2) + 1
-                    break
-            }
-        })
-        index++
-        seats.push(maxRow * 8 + maxCol)
-
+        uniqueAnswersAmount.push(getUnique(parse).length)
     })
 
-    return seats;
+    return uniqueAnswersAmount;
 }
 
-function highestId(seatIds) {
-    return Math.max(...seatIds)
-}
+function getUnique(answers) {
+    let checkedLeters = []
+    let validAnswers = []
 
-function missingSeat(seats) {
-    let missingSeats = []
-
-    let sortedSeats = seats.sort(function(a, b) {
-        return a - b;
-    })
-
-    let lastId = 88
-    sortedSeats.forEach((seat) => {
-        lastId++
-        if(Number(seat) !== Number(lastId)) {
-            missingSeats.push(lastId)
-            lastId++
+    answers.forEach((answer) => {
+        for (let i = 0; i < answer.length; i++) {
+            if(!checkedLeters.includes(answer.charAt(i)))
+                if(answerMatchAll(answer.charAt(i), answers)) {
+                    validAnswers.push(answer.charAt(i))
+                    checkedLeters.push(answer.charAt(i))
+                }
         }
     })
 
-    return missingSeats
+    return validAnswers
+}
+
+function answerMatchAll(letter, answers) {
+    return !answers.some((answer) => {
+        return (answer.match(letter) || []).length === 0
+    })
 }

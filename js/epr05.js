@@ -25,16 +25,12 @@ function parseRaw(text) {
 function processSeatsIds(parsed) {
     let seats = []
 
-    let index = 1
-
     parsed.forEach((parse) => {
         let minRow = 0
         let maxRow = 127
-        let row = 0
 
         let minCol = 0
         let maxCol = 7
-        let col = 0
 
         parse.forEach((op) => {
             switch(op) {
@@ -52,9 +48,7 @@ function processSeatsIds(parsed) {
                     break
             }
         })
-        index++
         seats.push(maxRow * 8 + maxCol)
-
     })
 
     return seats;
