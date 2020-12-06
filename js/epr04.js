@@ -25,8 +25,6 @@ function parseRaw(text) {
         } else
             group += ' ' + split
     });
-
-    console.log(grouped)
     return grouped
 }
 
